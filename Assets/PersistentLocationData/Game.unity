@@ -1118,7 +1118,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Exit \nSession"
+  m_Text: "Reset \nSession"
 --- !u!222 &415098820
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2761,7 +2761,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Tier 1 Item
+  m_Text: 'Level 1
 
     Placement'
 --- !u!222 &920592706
@@ -2899,7 +2899,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Tier 3 Item
+  m_Text: 'Level 3
 
     Placement'
 --- !u!222 &1042856658
@@ -2975,7 +2975,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Interact
+  m_Text: 'Remove
 
     Mode'
 --- !u!222 &1150782508
@@ -4463,7 +4463,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Tier 2 Item
+  m_Text: 'Level 2
 
     Placement'
 --- !u!222 &1868169225
@@ -4902,6 +4902,11 @@ Prefab:
         type: 2}
       propertyPath: IsEnabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114879269422697378, guid: b7ccf499acc164e6d853879300dc4509,
+        type: 2}
+      propertyPath: m_Text
+      value: Hold your phone up to start
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114188909460322866, guid: b7ccf499acc164e6d853879300dc4509, type: 2}

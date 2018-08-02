@@ -86,6 +86,7 @@ public class PlayerUiController : MonoBehaviour {
 		_mapTouchControlPanel.SetActive (_fullScreenMapEnabled);
 		_arViewTouchController.gameObject.SetActive (!_fullScreenMapEnabled);
 		SideButtons.SetActive (!_fullScreenMapEnabled);
+		ExitGameButton.SetActive (!_fullScreenMapEnabled);
 
 		if (_fullScreenMapEnabled)
 		{
@@ -128,7 +129,7 @@ public class PlayerUiController : MonoBehaviour {
 	{
 		InteractMode = InteractMode.Interact;
 		SelectorIcon.position = InteractButton.position;
-		ScreenMessageController.Instance.SetText ("Tap AR items to interact with them");
+		ScreenMessageController.Instance.SetText ("Tap AR items to remove them");
 	}
 
 	public void OnRemoveItemClick()
@@ -144,6 +145,7 @@ public class PlayerUiController : MonoBehaviour {
 		_arViewTouchController.ActivePlacementItem = null;
 		SetItemPlacementUiState(true);
 
+		ScreenMessageController.Instance.SetText ("Saved Item Placement", 2.5f);
 	}
 
 	public void OnDiscardObjectClick()
@@ -151,10 +153,9 @@ public class PlayerUiController : MonoBehaviour {
 		Destroy(_arViewTouchController.ActivePlacementItem.gameObject);
 		SetItemPlacementUiState(true);
 
-		ScreenMessageController.Instance.SetText ("Saved Item Placement", 2.5f);
 	}
 
-	public void SetItemPlacementUiState(bool active, bool setToInteract = true)
+	public void SetItemPlacementUiState(bool active, bool saveDiscardButtons = true /*bool setToInteract = true*/)
 	{
 		if (InteractMode == InteractMode.Interact)
 		{
@@ -169,16 +170,19 @@ public class PlayerUiController : MonoBehaviour {
 				SideButtons.transform.GetChild (i).GetComponent<Button> ().interactable = active;
 			}
 				
-			if (InteractMode == InteractMode.Tier2Placement || InteractMode == InteractMode.Tier3Placement)
+//			if (InteractMode == InteractMode.Tier2Placement || InteractMode == InteractMode.Tier3Placement)
+//			{
+			if (saveDiscardButtons)
 			{
 				SaveDiscardButtons.SetActive (!active);
 			}
+//			}
 
-			if (active && setToInteract)
-			{
-				InteractMode = InteractMode.Interact;
-				SelectorIcon.position = InteractButton.position;
-			}
+//			if (active && setToInteract)
+//			{
+//				InteractMode = InteractMode.Interact;
+//				SelectorIcon.position = InteractButton.position;
+//			}
 		}
 	}
 

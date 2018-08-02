@@ -8,7 +8,7 @@ using Sturfee.Unity.XR.Core.Session;
 public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDragHandler{
 
 	[HideInInspector]
-	public Transform ActivePlacementItem;	// The tier 2 or 3 item being actively moved before deciding to save or discard it
+	public Transform ActivePlacementItem;	//********** The tier 2 or 3 item being actively moved before deciding to save or discard it
 
 	[Header("Layer Masks")]
 	[SerializeField]
@@ -33,7 +33,7 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 	private PlayerUiController _playerUiController;
 
 	private bool _activeHitscan = false;
-	private bool _reachedSturfeeServer = false;
+
 	private GameObject _selectedArItem;
 	private Material _selectedArItemMaterial;
 
@@ -58,7 +58,7 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 			ScreenTouchRaycast (eventData.pressPosition, _interactLayerMask);
 			break;
 		case InteractMode.Tier1Placement:
-			if (!_activeHitscan)
+			if (!_activeHitscan && ActivePlacementItem == null)
 			{
 				StartCoroutine (DetectSurfacePointTimer());
 				XRSessionManager.GetSession ().DetectSurfaceAtPoint (eventData.pressPosition);
@@ -171,17 +171,21 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 	// Sturfee event called when 'DetectSurfaceAtPoint' completes
 	public void OnDetectSurfacePointComplete(Sturfee.Unity.XR.Core.Models.Location.GpsPosition gpsPos, UnityEngine.Vector3 normal)
 	{
-		_activeHitscan = false;
-		GameObject arItem = Instantiate (GameManager.Instance.Tier1ItemPrefab,
-			XRSessionManager.GetSession ().GpsToLocalPosition (gpsPos), Quaternion.LookRotation (normal));
-		
-		SaveLoadManager.SaveArItem(arItem.transform);
-		ScreenMessageController.Instance.SetText ("Saved Item Placement", 2.5f);
+		print ("*** DETECT SURFACE POINT COMPLETE");
 
-		if (_playerUiController.InteractMode != InteractMode.Tier2Placement)
-		{
-			_playerUiController.SetItemPlacementUiState(true);
-		}
+		_activeHitscan = false;
+		/*GameObject arItem*/ ActivePlacementItem = Instantiate (GameManager.Instance.Tier1ItemPrefab,
+			XRSessionManager.GetSession ().GpsToLocalPosition (gpsPos), Quaternion.LookRotation (normal)).transform;
+		
+//		SaveLoadManager.SaveArItem(arItem.transform);
+//		ScreenMessageController.Instance.SetText ("Saved Item Placement", 2.5f);
+
+		ScreenMessageController.Instance.ClearText ();
+
+//		if (_playerUiController.InteractMode != InteractMode.Tier2Placement)
+//		{
+			_playerUiController.SetItemPlacementUiState(/*true*/ false);
+//		}
 	}
 		
 	// Sturfee event called when 'DetectSurfaceAtPoint' fails
@@ -195,9 +199,10 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 	// Error handling timer when Sturfee function 'OnDetectSurfaceAtPoint'is called
 	private IEnumerator DetectSurfacePointTimer()
 	{
+		print ("*** DETECT SURFACE POINT TIMER");
 		_activeHitscan = true;
-		_playerUiController.SetItemPlacementUiState(false);
-		ScreenMessageController.Instance.SetText ("Placing Item");
+		_playerUiController.SetItemPlacementUiState(false, false);
+		ScreenMessageController.Instance.SetText ("Placing Item...");
 
 		float endTimer = Time.time + 5;
 		while (_activeHitscan && Time.time < endTimer)
@@ -205,13 +210,15 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 			yield return null;
 		}
 
+		// TODO: Handle this error scenario well
+
 		if (_activeHitscan)
 		{
 			// Either a Unity error occurred due to loss of connection, or the server is acting slow
 			ScreenMessageController.Instance.SetText ("Hitscan call timed out");
+			_playerUiController.SetItemPlacementUiState(true);
 		}
-
-		_playerUiController.SetItemPlacementUiState(true);
+			
 		_activeHitscan = false;
 	}
 }
