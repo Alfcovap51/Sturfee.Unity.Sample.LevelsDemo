@@ -164,7 +164,10 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 
 	public void RemoveSelectedArItem()
 	{
-		SaveLoadManager.RemoveArItem (_selectedArItem.GetComponentInParent<ArItem> ().Id);
+		if (GameManager.Instance.AllowSaveLoad)
+		{
+			SaveLoadManager.RemoveArItem (_selectedArItem.GetComponentInParent<ArItem> ().Id);
+		}
 		Destroy (_selectedArItem.transform.parent.gameObject);
 	}
 

@@ -1029,6 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee96f5511e0547fa8409a94b3df30c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AllowSaveLoad: 0
   HasSaveDataPanel: {fileID: 1540109971}
   PlayerUi: {fileID: 1775942415}
   Tier1ItemPrefab: {fileID: 1827610452284904, guid: b38fe9bf74d6f44a88e81c5f13e6defb,

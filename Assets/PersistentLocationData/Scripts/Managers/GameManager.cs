@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
+	// TODO: Explanation....
+	public bool AllowSaveLoad;
+
 	[Header("UI")]
 	public GameObject HasSaveDataPanel;		// Only appears if save data exists
 	public PlayerUiController PlayerUi;
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour {
 	private void Start ()
 	{
 		HasSaveData = SaveLoadManager.HasSaveData ();
-		if (HasSaveData)
+		if (AllowSaveLoad && HasSaveData)
 		{
 			HasSaveDataPanel.SetActive (true);
 		}
@@ -74,6 +77,7 @@ public class GameManager : MonoBehaviour {
 
 	private void ReloadScene()
 	{
+		//......
 		SaveLoadManager.Unload ();
 		SceneManager.LoadScene ("Game");
 	}

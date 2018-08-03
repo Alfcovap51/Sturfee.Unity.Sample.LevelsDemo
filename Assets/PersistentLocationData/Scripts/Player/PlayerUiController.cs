@@ -136,16 +136,18 @@ public class PlayerUiController : MonoBehaviour {
 	{
 		_arViewTouchController.RemoveSelectedArItem ();
 		ItemSelectedButtons.SetActive (false);
+		ScreenMessageController.Instance.SetText ("Removed Item", 3);
 	}
 		
 	public void OnSavePlacementClick()
 	{
-		SaveLoadManager.SaveArItem (_arViewTouchController.ActivePlacementItem);
-
+		if (GameManager.Instance.AllowSaveLoad)
+		{
+			SaveLoadManager.SaveArItem (_arViewTouchController.ActivePlacementItem);
+			ScreenMessageController.Instance.SetText ("Saved Item Placement", 2.5f);
+		}
 		_arViewTouchController.ActivePlacementItem = null;
 		SetItemPlacementUiState(true);
-
-		ScreenMessageController.Instance.SetText ("Saved Item Placement", 2.5f);
 	}
 
 	public void OnDiscardObjectClick()
