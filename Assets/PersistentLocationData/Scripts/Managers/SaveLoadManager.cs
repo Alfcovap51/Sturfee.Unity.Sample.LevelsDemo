@@ -40,17 +40,17 @@ public class SaveLoadManager : MonoBehaviour {
 			Vector3 pos = XRSessionManager.GetSession ().GpsToLocalPosition (gps);
 
 			GameObject spawnItem;
-			if (arItemData.ItemType == (int)ArItemType.tier1)
+			if (arItemData.ItemType == (int)ArItemType.level1)
 			{
-				spawnItem = GameManager.Instance.Tier1ItemPrefab;
+				spawnItem = GameManager.Instance.Level1ItemPrefab;
 			}
-			else if (arItemData.ItemType == (int)ArItemType.tier2)
+			else if (arItemData.ItemType == (int)ArItemType.level2)
 			{
-				spawnItem = GameManager.Instance.Tier2ItemPrefab;
+				spawnItem = GameManager.Instance.Level2ItemPrefab;
 			}
 			else
 			{
-				spawnItem = GameManager.Instance.Tier3ItemPrefab;
+				spawnItem = GameManager.Instance.Level3ItemPrefab;
 			}
 
 			GameObject arItem = Instantiate (spawnItem, pos, quat);

@@ -8,17 +8,16 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
-	// TODO: Explanation....
-	public bool AllowSaveLoad;
+	public bool AllowSaveLoad; 				// Allows the game to save and load data to phone during play
 
 	[Header("UI")]
 	public GameObject HasSaveDataPanel;		// Only appears if save data exists
 	public PlayerUiController PlayerUi;
 
 	[Header("AR Item Prefabs")]
-	public GameObject Tier1ItemPrefab;
-	public GameObject Tier2ItemPrefab;
-	public GameObject Tier3ItemPrefab;
+	public GameObject Level1ItemPrefab;
+	public GameObject Level2ItemPrefab;
+	public GameObject Level3ItemPrefab;
 
 	[HideInInspector]
 	public bool HasSaveData;
@@ -77,7 +76,6 @@ public class GameManager : MonoBehaviour {
 
 	private void ReloadScene()
 	{
-		//......
 		SaveLoadManager.Unload ();
 		SceneManager.LoadScene ("Game");
 	}

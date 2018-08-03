@@ -311,13 +311,11 @@ public class AlignmentManager : MonoBehaviour {
 			else if (status == Sturfee.Unity.XR.Core.Constants.Enums.AlignmentStatus.IndoorsError)
 			{
 				ScreenMessageController.Instance.SetText("Localization Failed: Indoors Error\nResetting Game");
-//				Debug.Log ("Indoors Error");
 				_midAlignmentError = true;
 			}
 			else if (status == Sturfee.Unity.XR.Core.Constants.Enums.AlignmentStatus.RequestError)
 			{
 				ScreenMessageController.Instance.SetText("Localization Failed: Request Error\nResetting Game");
-//				Debug.Log ("Request Error");
 				_midAlignmentError = true;
 			}
 			else if (status == Sturfee.Unity.XR.Core.Constants.Enums.AlignmentStatus.Error)

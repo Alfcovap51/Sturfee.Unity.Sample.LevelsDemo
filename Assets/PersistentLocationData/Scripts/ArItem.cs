@@ -10,7 +10,7 @@ public class ArItem: MonoBehaviour{
 
 public enum ArItemType
 {
-	tier1,
-	tier2,
-	tier3
+	level1,
+	level2,
+	level3
 }

@@ -20,7 +20,7 @@ public class PlayerMapTouchController : MonoBehaviour , IDragHandler, IBeginDrag
 	private int _camBoundsRight;
 	private int _camBoundsLeft;
 
-	// extent that the full-screen-map-camera sees vertically and horizontally
+	// Extent that the full-screen-map-camera sees vertically and horizontally
 	private float _vertFullCamExtent;
 	private float _horFullCamExtent;
 

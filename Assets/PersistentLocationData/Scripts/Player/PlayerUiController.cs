@@ -8,10 +8,10 @@ using System.Text.RegularExpressions;
 // Touching the screen while the AR view is active will bring different results depending on the player's InteractMode
 public enum InteractMode
 {
-	Interact,
-	Tier1Placement,
-	Tier2Placement,
-	Tier3Placement
+	Remove,
+	Level1Placement,
+	Level2Placement,
+	Level3Placement
 }
 
 // Handles all Player UI after localization
@@ -25,10 +25,10 @@ public class PlayerUiController : MonoBehaviour {
 	public GameObject SaveDiscardButtons;
 	public GameObject ItemSelectedButtons;
 	public GameObject MapViewButton;
-	public GameObject ExitGameButton;
-	public Transform Tier3PlacementButton;
-	public Transform Tier2PlacementButton;
-	public Transform Tier1PlacementButton;
+	public GameObject ResetGameButton;
+	public Transform Level3PlacementButton;
+	public Transform Level2PlacementButton;
+	public Transform Level1PlacementButton;
 	public Transform InteractButton;
 	public Transform SelectorIcon;
 
@@ -45,7 +45,7 @@ public class PlayerUiController : MonoBehaviour {
 	private GameObject _mapPlayer;
 
 	private bool _fullScreenMapEnabled = false;
-	private int _sturfeeTier;
+	private int _sturfeeLevel;
 
 	private void Awake () 
 	{
@@ -55,20 +55,20 @@ public class PlayerUiController : MonoBehaviour {
 		_playerCanvas.SetActive (false);
 		_mapTouchControlPanel.SetActive (false);
 
-		InteractMode = InteractMode.Interact;
+		InteractMode = InteractMode.Remove;
 
-		// Check what Sturfee tier is being used
-		string tierStr = AccessHelper.CurrentTier.ToString ();
-		tierStr = Regex.Replace(tierStr, "[^0-9]", "");
-		_sturfeeTier = int.Parse (tierStr);
+		// Check what Sturfee level is being used
+		string levelStr = AccessHelper.CurrentTier.ToString ();
+		levelStr = Regex.Replace(levelStr, "[^0-9]", "");
+		_sturfeeLevel = int.Parse (levelStr);
 
-		if (_sturfeeTier < 3)
+		if (_sturfeeLevel < 3)
 		{
-			Tier3PlacementButton.GetComponent<Button> ().interactable = false;
+			Level3PlacementButton.GetComponent<Button> ().interactable = false;
 		}
-		if (_sturfeeTier < 2)
+		if (_sturfeeLevel < 2)
 		{
-			Tier2PlacementButton.GetComponent<Button> ().interactable = false;
+			Level2PlacementButton.GetComponent<Button> ().interactable = false;
 		}
 	}
 
@@ -86,7 +86,7 @@ public class PlayerUiController : MonoBehaviour {
 		_mapTouchControlPanel.SetActive (_fullScreenMapEnabled);
 		_arViewTouchController.gameObject.SetActive (!_fullScreenMapEnabled);
 		SideButtons.SetActive (!_fullScreenMapEnabled);
-		ExitGameButton.SetActive (!_fullScreenMapEnabled);
+		ResetGameButton.SetActive (!_fullScreenMapEnabled);
 
 		if (_fullScreenMapEnabled)
 		{
@@ -101,33 +101,33 @@ public class PlayerUiController : MonoBehaviour {
 		}
 	}
 
-	public void OnTier1PlacementClick()
+	public void OnLevel1PlacementClick()
 	{
 		SetItemSelectedOptions (false);
-		InteractMode = InteractMode.Tier1Placement;
-		SelectorIcon.position = Tier1PlacementButton.position;
+		InteractMode = InteractMode.Level1Placement;
+		SelectorIcon.position = Level1PlacementButton.position;
 		ScreenMessageController.Instance.SetText ("Tap the environment to place an item");
 	}
 
-	public void OnTier2PlacementClick()
+	public void OnLevel2PlacementClick()
 	{
 		SetItemSelectedOptions (false);
-		InteractMode = InteractMode.Tier2Placement;
-		SelectorIcon.position = Tier2PlacementButton.position;
+		InteractMode = InteractMode.Level2Placement;
+		SelectorIcon.position = Level2PlacementButton.position;
 		ScreenMessageController.Instance.SetText ("Drag your finger across\nthe ground on screen");
 	}
 
-	public void OnTier3PlacementClick()
+	public void OnLevel3PlacementClick()
 	{
 		SetItemSelectedOptions (false);
-		InteractMode = InteractMode.Tier3Placement;
-		SelectorIcon.position = Tier3PlacementButton.position;
+		InteractMode = InteractMode.Level3Placement;
+		SelectorIcon.position = Level3PlacementButton.position;
 		ScreenMessageController.Instance.SetText ("Drag your finger across the\nground and buildings on screen");
 	}
 
-	public void OnInteractModeClick()
+	public void OnRemoveModeClick()
 	{
-		InteractMode = InteractMode.Interact;
+		InteractMode = InteractMode.Remove;
 		SelectorIcon.position = InteractButton.position;
 		ScreenMessageController.Instance.SetText ("Tap AR items to remove them");
 	}
@@ -154,37 +154,27 @@ public class PlayerUiController : MonoBehaviour {
 	{
 		Destroy(_arViewTouchController.ActivePlacementItem.gameObject);
 		SetItemPlacementUiState(true);
-
 	}
 
-	public void SetItemPlacementUiState(bool active, bool saveDiscardButtons = true /*bool setToInteract = true*/)
+	public void SetItemPlacementUiState(bool active, bool saveDiscardButtons = true)
 	{
-		if (InteractMode == InteractMode.Interact)
+		if (InteractMode == InteractMode.Remove)
 		{
 			return;
 		}
 		else
 		{
-			ExitGameButton.GetComponent<Button> ().interactable = active;
+			ResetGameButton.GetComponent<Button> ().interactable = active;
 			MapViewButton.GetComponent<Button> ().interactable = active;
-			for (int i = 1; i <= _sturfeeTier + 1; i++)
+			for (int i = 1; i <= _sturfeeLevel + 1; i++)
 			{
 				SideButtons.transform.GetChild (i).GetComponent<Button> ().interactable = active;
 			}
 				
-//			if (InteractMode == InteractMode.Tier2Placement || InteractMode == InteractMode.Tier3Placement)
-//			{
 			if (saveDiscardButtons)
 			{
 				SaveDiscardButtons.SetActive (!active);
 			}
-//			}
-
-//			if (active && setToInteract)
-//			{
-//				InteractMode = InteractMode.Interact;
-//				SelectorIcon.position = InteractButton.position;
-//			}
 		}
 	}
 
