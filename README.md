@@ -4,7 +4,7 @@ The primary purpose of this demo is to showcase the differences between level 1,
 
 This demo allows users to localize themselves in Sturfee-enabled cities, and place digital objects on the ground and buildings.
 
-# Levels
+# LEVELS
 
 Your Sturfee API key determines what levels are available to use.
 The levels available to you are those that are equal to and below your access level
@@ -54,7 +54,6 @@ Go to [Mapbox.com](https://mapbox.com) and [Sturfee.com](https://sturfee.com) an
 
 # HOW TO PLAY:
 
-### User Localization:
 1. Go outside.
 2. Check that your phone has GPS on with a good internet connection.
 3. Open the app and wait for the Sturfee session to initialize.
