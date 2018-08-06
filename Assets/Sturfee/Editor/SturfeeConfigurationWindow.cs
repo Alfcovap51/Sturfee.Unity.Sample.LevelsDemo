@@ -400,13 +400,13 @@ public class SturfeeConfigurationWindow : EditorWindow
                         GUILayout.Label("XR Objects", EditorStyles.boldLabel);
                         if (GUILayout.Button("Create XRSession", GUILayout.Width(200), GUILayout.Height(30)))
                         {
-                            UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Sturfee/XRSession/SturfeeXRSession.prefab", typeof(GameObject));
+                            UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Sturfee/SDK/XRSession/SturfeeXRSession.prefab", typeof(GameObject));
                             GameObject clone = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                             clone.name = prefab.name;
                         }
                         if (GUILayout.Button("Create XRCamera", GUILayout.Width(200), GUILayout.Height(30)))
                         {
-                            UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Sturfee/XRSession/SturfeeXRCamera.prefab", typeof(GameObject));
+                            UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Sturfee/SDK/XRSession/SturfeeXRCamera.prefab", typeof(GameObject));
                             GameObject clone = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                             clone.name = prefab.name;
                         }

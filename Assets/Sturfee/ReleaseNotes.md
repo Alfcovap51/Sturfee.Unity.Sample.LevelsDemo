@@ -33,4 +33,5 @@ _BREAKING Changes_
 - ArKit and ArCore updated to latest
 - Tracked Pose Driver removed from ArCore Provider Set
 - World Anchor updated to save edits in PlayMode. Gizmo added for World Anchor
+- Exceptions added for Invalid requests
 
