@@ -7,7 +7,7 @@ This demo allows users to localize themselves in Sturfee-enabled cities, and pla
 # LEVELS
 
 Your Sturfee API key determines what levels are available to use.
-The levels available to you are those that are equal to and below your access level
+The levels available to you are those that are equal to and below your access level.
 
 **Level 1**
 
@@ -27,29 +27,29 @@ Uses terrain and building data loaded at the start of application, allowing for 
 The default project has blank Mapbox and Sturfee keys.  
 *You must plug in your own unique keys in order to use this sample game correctly.*
 
-Go to [Mapbox.com](https://mapbox.com) and [Sturfee.com](https://sturfee.com) and create an account to generate your respective keys.
+Go to [Mapbox.com](https://mapbox.com) and [Sturfee.com](https://sturfee.com) and create accounts to generate your respective keys.
 
 **How to apply Mapbox key:**
 
 1. In the Unity project, on the top menu bar, click Mapbox -> Setup. A new window should appear.
-2. Under "Access Token" paste your key value from the Mapbox website and press the "Submit" button
+2. Under "Access Token" paste your key value from the Mapbox website and press the "Submit" button.
 
 **How to apply Sturfee key:**
 
 1. In the Unity project, on the top menu bar, click Sturfee -> Configure. A new window should appear.
-2. Next to "API Key" there is an empty box. Paste your key value from the Sturfee website here and press the "Request Access" button
+2. Next to "API Key" there is an empty box. Paste your key value from the Sturfee website here and press the "Request Access" button.
 
 **Building to Android (With AR Core)**
 
-1. Open the Unity project and click on the 'SturfeeXrSession' object in the Game scene hierarchy
+1. Open the Unity project and click on the 'SturfeeXrSession' object in the Game scene hierarchy.
 2. Under the 'SturfeeXrSession' script in the Inspector view, click on the 'Provider Set' options. Make sure it is set to Custom -> ArCore Provider Set.
-3. Then make sure that the 'Play On Start' option is toggled OFF
+3. Then make sure that the 'Play On Start' option is toggled OFF.
 
 **Building to iPhone (With AR Kit)**
 
-1. Open the Unity project and click on the 'SturfeeXrSession' object in the Game scene hierarchy
-2. Under the 'SturfeeXrSession' script in the Inspector view, click on the 'Provider Set' options. Make sure it is set to Custom -> ArKit Provider Set
-3. Then make sure that the 'Play On Start' option is toggled ON
+1. Open the Unity project and click on the 'SturfeeXrSession' object in the Game scene hierarchy.
+2. Under the 'SturfeeXrSession' script in the Inspector view, click on the 'Provider Set' options. Make sure it is set to Custom -> ArKit Provider Set.
+3. Then make sure that the 'Play On Start' option is toggled ON.
 
 
 # HOW TO PLAY:
@@ -67,7 +67,7 @@ Go to [Mapbox.com](https://mapbox.com) and [Sturfee.com](https://sturfee.com) an
 9. Now tap the 'Level 3 Placement' button, then drag your finger across the terrain and buildings on screen. Notice that the object can be freely dragged along these environments.
 10. This action uses preloaded building and terrain data to determine placement. It does not require an API call for every environment check as level 1 does.
 11. Determine a desirable location for the object, then press the 'Save Placement' button at the top.
-12. Using Tier 2 Placement only takes in preloaded terrain data and does not hold building data. Thus it only enables ground placement.
+12. Using Level 2 Placement only takes in preloaded terrain data and does not hold building data. Thus it only enables ground placement.
 13. You can also press the 'Remove Mode' button and then tap on any AR objects placed to be given the option to remove them.
 
 ___
