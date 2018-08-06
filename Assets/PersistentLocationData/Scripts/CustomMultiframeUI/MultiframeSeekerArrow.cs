@@ -9,7 +9,7 @@ public class MultiframeSeekerArrow : MonoBehaviour {
 
 	private GameObject _arrow;
 	private bool _isScanning;
-	private Transform _curTarget;
+	private Transform _curTarget;		// Target that the arrow is currently pointing at
 	Vector3 _screenMiddle;
 	private float _removeArrowDist;		// Screen distance from the target center upon which the arrow should appear/disappear
 

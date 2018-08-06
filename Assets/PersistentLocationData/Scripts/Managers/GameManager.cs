@@ -2,11 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 // Holds game information and controls state of game
 public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
+	public static bool HasSaveData;
+	public static int SturfeeLevel;
 
 	public bool AllowSaveLoad; 				// Allows the game to save and load data to phone during play
 
@@ -19,9 +22,6 @@ public class GameManager : MonoBehaviour {
 	public GameObject Level2ItemPrefab;
 	public GameObject Level3ItemPrefab;
 
-	[HideInInspector]
-	public bool HasSaveData;
-
 	private bool _loadGame = false;
 
 	private void Awake()
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
 
 	private void Start ()
 	{
+		// Change start screen options depending on if save data exists
 		HasSaveData = SaveLoadManager.HasSaveData ();
 		if (AllowSaveLoad && HasSaveData)
 		{
@@ -42,6 +43,11 @@ public class GameManager : MonoBehaviour {
 			AlignmentManager.Instance.LookTrigger.GetComponent<LookUpTrigger> ().IsEnabled = true;
 			ScreenMessageController.Instance.SetText ("Initializing Session...");
 		}
+
+		// Determine Sturfee level
+		string levelStr = AccessHelper.CurrentTier.ToString ();
+		levelStr = Regex.Replace(levelStr, "[^0-9]", "");
+		SturfeeLevel = int.Parse (levelStr);
 	}
 		
 	// If save data exists, then pressing 'New Game' or 'Load Game' button will lead to this call

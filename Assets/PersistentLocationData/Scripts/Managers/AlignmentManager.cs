@@ -123,7 +123,7 @@ public class AlignmentManager : MonoBehaviour {
 		{
 			_resetCalled = true;
 			ScanButton.SetActive (true);
-			if (!GameManager.Instance.HasSaveData)
+			if (!GameManager.HasSaveData)
 			{
 				BackButton.SetActive (false);
 			}
@@ -323,7 +323,7 @@ public class AlignmentManager : MonoBehaviour {
 				ScreenMessageController.Instance.SetText("Localization failed");
 			}
 
-			// Current SDK requires reset when these errors occur. Plan to fix this problem in next release.
+			// Current SDK requires reset when these errors occur. Plan to fix this problem in future release.
 			if (_midAlignmentError)
 			{
 				GameManager.Instance.ResetGame (3);
@@ -338,7 +338,7 @@ public class AlignmentManager : MonoBehaviour {
 
 	private void ResetToStartScreen()
 	{
-		if (GameManager.Instance.HasSaveData)
+		if (GameManager.HasSaveData)
 		{
 			GameManager.Instance.OnSaveDataStartScreenClick (_loadGame);
 		}
@@ -362,7 +362,7 @@ public class AlignmentManager : MonoBehaviour {
 	private void TurnOnScanButton()
 	{
 		ScanButton.SetActive (true);
-		if (GameManager.Instance.HasSaveData)
+		if (GameManager.HasSaveData)
 		{
 			BackButton.SetActive (true);
 		}

@@ -58,7 +58,7 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 			ScreenTouchRaycast (eventData.pressPosition, _removalLayerMask);
 			break;
 		case InteractMode.Level1Placement:
-			if (!_activeHitscan && ActivePlacementItem == null)
+			if (!_activeHitscan)
 			{
 				StartCoroutine (DetectSurfacePointTimer());
 				XRSessionManager.GetSession ().DetectSurfaceAtPoint (eventData.pressPosition);
@@ -168,8 +168,13 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 	public void OnDetectSurfacePointComplete(Sturfee.Unity.XR.Core.Models.Location.GpsPosition gpsPos, UnityEngine.Vector3 normal)
 	{
 		_activeHitscan = false;
-		ActivePlacementItem = Instantiate (GameManager.Instance.Level1ItemPrefab,
-			XRSessionManager.GetSession ().GpsToLocalPosition (gpsPos), Quaternion.LookRotation (normal)).transform;
+		if (ActivePlacementItem == null)
+		{
+			ActivePlacementItem = Instantiate (GameManager.Instance.Level1ItemPrefab).transform;
+		}
+
+		ActivePlacementItem.position = XRSessionManager.GetSession ().GpsToLocalPosition (gpsPos);
+		ActivePlacementItem.rotation = Quaternion.LookRotation (normal);
 
 		ScreenMessageController.Instance.ClearText ();
 		_playerUiController.SetItemPlacementUiState(false);
@@ -190,7 +195,13 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 		_playerUiController.SetItemPlacementUiState(false, false);
 		ScreenMessageController.Instance.SetText ("Placing Item...");
 
-		float endTimer = Time.time + 5;
+		float endTimer = Time.time;
+
+		// Sets the error timer to 5 seconds for actual server calls when using level 1 or 2 Sturfee API keys.
+		// Using a level 3 key automatically overwrites level 1 API calls to use its preloaded terrain and building data rather than making a call to the server.
+		// Thus using level 1 calls with a level 3 key in this sample app simply simulates level 1 calls with a one second error timer for failures, as all successful call wills be instant.
+		endTimer += (GameManager.SturfeeLevel < 3) ? 5 : 1;
+
 		while (_activeHitscan && Time.time < endTimer)
 		{
 			yield return null;
@@ -198,9 +209,22 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 
 		if (_activeHitscan)
 		{
-			// Either a Unity error occurred due to loss of connection, or the server is acting slow
-			ScreenMessageController.Instance.SetText ("Hitscan call timed out");
-			_playerUiController.SetItemPlacementUiState(true);
+			// Level 1 & 2
+			if (GameManager.SturfeeLevel < 3)
+			{
+				// Either a Unity error occurred during the server call due to loss of connection, or the server is acting slow
+				ScreenMessageController.Instance.SetText ("API hitscan call timed out");
+			}
+			else  // Level 3
+			{
+				// User did not tap on a terrain or building collider
+				ScreenMessageController.Instance.SetText ("Call failed. Did not tap on terrain or building", 3);
+			}
+
+			if (!ActivePlacementItem)
+			{
+				_playerUiController.SetItemPlacementUiState (true);
+			}
 		}
 			
 		_activeHitscan = false;

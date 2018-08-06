@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Sturfee.Unity.XR.Core.Events;
 using Sturfee.Unity.XR.Core.Session;
-using System.Text.RegularExpressions;
 
 // Touching the screen while the AR view is active will bring different results depending on the player's InteractMode
 public enum InteractMode
@@ -45,7 +44,6 @@ public class PlayerUiController : MonoBehaviour {
 	private GameObject _mapPlayer;
 
 	private bool _fullScreenMapEnabled = false;
-	private int _sturfeeLevel;
 
 	private void Awake () 
 	{
@@ -56,20 +54,6 @@ public class PlayerUiController : MonoBehaviour {
 		_mapTouchControlPanel.SetActive (false);
 
 		InteractMode = InteractMode.Remove;
-
-		// Check what Sturfee level is being used
-		string levelStr = AccessHelper.CurrentTier.ToString ();
-		levelStr = Regex.Replace(levelStr, "[^0-9]", "");
-		_sturfeeLevel = int.Parse (levelStr);
-
-		if (_sturfeeLevel < 3)
-		{
-			Level3PlacementButton.GetComponent<Button> ().interactable = false;
-		}
-		if (_sturfeeLevel < 2)
-		{
-			Level2PlacementButton.GetComponent<Button> ().interactable = false;
-		}
 	}
 
 	public void Initialize()
@@ -77,6 +61,15 @@ public class PlayerUiController : MonoBehaviour {
 		_mapPlayer.SetActive (true);
 		_playerCanvas.SetActive (true);
 		SelectorIcon.position = InteractButton.position;
+
+		if (GameManager.SturfeeLevel < 3)
+		{
+			Level3PlacementButton.GetComponent<Button> ().interactable = false;
+		}
+		if (GameManager.SturfeeLevel < 2)
+		{
+			Level2PlacementButton.GetComponent<Button> ().interactable = false;
+		}
 	}
 		
 	public void OnMapViewClick()
@@ -166,7 +159,7 @@ public class PlayerUiController : MonoBehaviour {
 		{
 			ResetGameButton.GetComponent<Button> ().interactable = active;
 			MapViewButton.GetComponent<Button> ().interactable = active;
-			for (int i = 1; i <= _sturfeeLevel + 1; i++)
+			for (int i = 1; i <= GameManager.SturfeeLevel + 1; i++)
 			{
 				SideButtons.transform.GetChild (i).GetComponent<Button> ().interactable = active;
 			}
