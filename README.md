@@ -1,12 +1,26 @@
 # SUMMARY
 
-This sample project saves digital objects placed in the real world by their GPS coordinates.
+The primary purpose of this demo is to showcase the differences between level 1, 2, and 3 environment detection, as well as to demonstrate the use of the multiframe alignment UI. 
 
-This means digital objects will remain in the same physical location when you close and reopen the app. For example, you may place a digital object next to a building, then the following day, reopen the app down the street, and notice the same object in the distance next to the same building.
+This demo allows users to localize themselves in Sturfee-enabled cities, and place digital objects on the ground and buildings.
 
-While this sample project saves this data locally on your phone, this data could be saved on a server or made viewable to multiple players by other means if a developer decided to do so.
+# Levels
 
-As an extra, this project also showcases the difference between tier 1, tier 2, and tier 3 detection.
+Your Sturfee API key determines what levels are available to use.
+The levels available to you are those that are equal to and below your access level
+
+**Level 1**
+
+Detects terrain and buildings, but requires an API call for every environment detection check. Slower than level 2 and 3.
+(If you have level 3 access, level 1 calls are automatically overwritten to use level 3)
+
+**Level 2**
+
+Uses terrain data loaded at the start of the application, allowing for faster and more detailed terrain detection. But does not detect buildings.
+
+**Level 3**
+
+Uses terrain and building data loaded at the start of application, allowing for faster and more detailed terrain and building detection.
 
 # BUILD REQUIREMENTS
 
@@ -37,35 +51,32 @@ Go to [Mapbox.com](https://mapbox.com) and [Sturfee.com](https://sturfee.com) an
 2. Under the 'SturfeeXrSession' script in the Inspector view, click on the 'Provider Set' options. Make sure it is set to Custom -> ArKit Provider Set
 3. Then make sure that the 'Play On Start' option is toggled ON
 
+
 # HOW TO PLAY:
 
-### Steps:
+### User Localization:
 1. Go outside.
 2. Check that your phone has GPS on with a good internet connection.
-3. Open the app, and wait for the Sturfee session to initialize.
+3. Open the app and wait for the Sturfee session to initialize.
 4. Align your phone roughly perpendicular to the ground in landscape mode as the prompt tells you to hold your phone up.
-4. Press the scan button that appears after completing this prompt as you keep the phone camera level.
+4. Face your camera toward buildings, ideally toward a city skyline, then press the scan button as you keep the phone camera level.
 5. Stand still and move your phone in order to align the center of the screen with the circles placed in the environment.
 6. Wait for localization to complete as your location is computed using the pictures just taken.
-6. Once localization is complete, take note of where you are located in the mini-map view. You can also press on the 'Map View' button in the top right to get a full screen view, allowing you to move the map camera around as well.
-7. On the right hand side there are several buttons. Tap the 'Tier 1 Item Placement' button, then tap on either the ground or a building to place an object at that location. 
+6. Once localization is complete, take note of where you are located in the mini-map view in relation to your camera view. You can also press on the 'Map View' button in the top right to get a full screen view, allowing you to move the map camera around as well.
+7. On the right hand side there are several buttons. Tap the 'Level 1 Placement' button, then tap on either the ground or a building to place an object at that location. 
 8. This action calls the Sturfee server and might take a moment to register placement. A failed call could be the result of connection issues.
-9. Now tap the 'Tier 3 Item Placement' button, then drag your finger across the terrain and buildings on screen. Notice that the object can be freely dragged along these environments.
-10. This action uses preloaded building and terrain data to determine placement.
+9. Now tap the 'Level 3 Placement' button, then drag your finger across the terrain and buildings on screen. Notice that the object can be freely dragged along these environments.
+10. This action uses preloaded building and terrain data to determine placement. It does not require an API call for every environment check as level 1 does.
 11. Determine a desirable location for the object, then press the 'Save Placement' button at the top.
 12. Using Tier 2 Placement only takes in preloaded terrain data and does not hold building data. Thus it only enables ground placement.
-12. Now press the 'Interact' button.
-13. Tap on any of the objects you placed on screen and an option will appear to remove it. You may do so if you wish.
-14. Make sure you have several objects placed in the scene, and then close the app.
-15. Move to a new location not too far, in range of view of where you placed the objects in the physical world.
-16. Reopen the app, you should now see 2 options, to either load your previous game, or start a new game. Choose 'Load Game'
-17. Go through the localization process just as you did before, and notice the objects you placed to be where you left them in the environment, despite yourself having moved and restarted the app. 
-18. You can open the map view to be able to see where items are placed for several blocks. If you place objects in entirely different areas, this map is not setup to view items too far away from your localization point, but if you localize back near the original location, you will be able to see them on the map again.
-
+13. You can also press the 'Remove Mode' button and then tap on any AR objects placed to be given the option to remove them.
 
 ___
 
 
 >NOTES:
+>
+> This app has code turned off by default that saves the AR objects the user places by their GPS position. This means the user can close and reopen the app in a different location, and see the AR objects they placed still in the same real world location that they left them. This feature can be turned on by finding the GameManager object in the hierarchy and toggling 'AllowSaveLoad' on the GameManager script attached to it.
+>
 > Unity Version: 2017.3.0f3
 >
