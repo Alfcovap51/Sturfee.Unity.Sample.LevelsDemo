@@ -218,7 +218,7 @@ public class PlayerArTouchController : MonoBehaviour, IPointerDownHandler, IDrag
 			else  // Level 3
 			{
 				// User did not tap on a terrain or building collider
-				ScreenMessageController.Instance.SetText ("Call failed. Did not tap on terrain or building", 3);
+				ScreenMessageController.Instance.SetText ("Call failed\nDid not tap on terrain or building", 3);
 			}
 
 			if (!ActivePlacementItem)
